@@ -16,13 +16,8 @@ class Day07(private val input: List<String>) {
         var current = outermost
         input.drop(1).forEach { line ->
             when {
-                line.startsWith("$ cd") -> {
-                    val name = line.substringAfter("cd ")
-                    current = when (name == "..") {
-                        true -> current.parent!!
-                        false -> current.dirs.first { it.name == name }
-                    }
-                }
+                line.startsWith("$ cd ..") -> current = current.parent!!
+                line.startsWith("$ cd") -> current = current.dirs.first { it.name == line.substringAfter("cd ") }
                 line.startsWith("dir") -> current.dirs.add(Dir(line.substringAfter("dir "), current))
                 !line.contains("$") -> current.files.add(File(line.substringBefore(" ").toInt()))
             }
