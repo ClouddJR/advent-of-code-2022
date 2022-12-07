@@ -11,7 +11,7 @@ class Day07(private val input: List<String>) {
     }
 
     private fun prepareTree(): Dir {
-        val outermost = Dir("/", null)
+        val outermost = Dir("/")
 
         var current = outermost
         input.drop(1).forEach { line ->
@@ -28,7 +28,7 @@ class Day07(private val input: List<String>) {
 
     private data class Dir(
         val name: String,
-        val parent: Dir?,
+        val parent: Dir? = null,
         val dirs: MutableList<Dir> = mutableListOf(),
         val files: MutableList<File> = mutableListOf()
     ) {
