@@ -5,7 +5,7 @@ class Day08(input: List<String>) {
 
     fun solvePart1() = traverse(
         score = { current, slice -> slice.all { it < current } },
-        combine = { direction -> if (direction.any { it }) 1 else 0 }
+        combine = { directions -> if (directions.any { it }) 1 else 0 }
     ).sum()
 
     fun solvePart2() = traverse(
