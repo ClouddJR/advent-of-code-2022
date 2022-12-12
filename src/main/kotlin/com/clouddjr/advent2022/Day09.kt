@@ -1,5 +1,6 @@
 package com.clouddjr.advent2022
 
+import com.clouddjr.advent2022.utils.Point2D
 import kotlin.math.abs
 import kotlin.math.sign
 
@@ -7,10 +8,10 @@ class Day09(input: List<String>) {
     private val motions = input.map { it.substringBefore(" ") to it.substringAfter(" ").toInt() }
 
     private val directions = mapOf(
-        "R" to Point(1, 0),
-        "U" to Point(0, 1),
-        "L" to Point(-1, 0),
-        "D" to Point(0, -1),
+        "R" to Point2D(1, 0),
+        "U" to Point2D(0, 1),
+        "L" to Point2D(-1, 0),
+        "D" to Point2D(0, -1),
     )
 
     fun solvePart1() = visitedTailPositions(numberOfKnots = 2)
@@ -18,8 +19,8 @@ class Day09(input: List<String>) {
     fun solvePart2() = visitedTailPositions(numberOfKnots = 10)
 
     private fun visitedTailPositions(numberOfKnots: Int): Int {
-        val knots = MutableList(numberOfKnots) { Point(0, 0) }
-        val visited = mutableSetOf<Point>()
+        val knots = MutableList(numberOfKnots) { Point2D(0, 0) }
+        val visited = mutableSetOf<Point2D>()
 
         motions.forEach { (dir, steps) ->
             repeat(steps) {
@@ -38,11 +39,7 @@ class Day09(input: List<String>) {
         return visited.size
     }
 
-    private data class Point(val x: Int, val y: Int) {
-        operator fun plus(other: Point) = Point(other.x + x, other.y + y)
+    private infix fun Point2D.movedTo(other: Point2D) = this + Point2D((other.x - x).sign, (other.y - y).sign)
 
-        infix fun movedTo(other: Point) = this + Point((other.x - x).sign, (other.y - y).sign)
-
-        fun isNeighbourOf(other: Point) = abs(other.x - x) < 2 && abs(other.y - y) < 2
-    }
+    private fun Point2D.isNeighbourOf(other: Point2D) = abs(other.x - x) < 2 && abs(other.y - y) < 2
 }
