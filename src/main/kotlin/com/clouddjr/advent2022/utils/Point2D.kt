@@ -11,6 +11,8 @@ data class Point2D(val x: Int, val y: Int) {
             .map { (dx, dy) -> Point2D(x + dx, y + dy) }
     }
 
+    infix fun distanceTo(other: Point2D) = abs(x - other.x) + abs(y - other.y)
+
     infix fun lineTo(other: Point2D): List<Point2D> {
         val dx = (other.x - x).sign
         val dy = (other.y - y).sign
