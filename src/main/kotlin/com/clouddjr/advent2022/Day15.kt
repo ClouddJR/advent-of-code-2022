@@ -29,7 +29,7 @@ class Day15(input: List<String>) {
     private fun getRangesForRow(row: Int): List<IntRange> {
         return pairs.mapNotNull { (sensor, beacon) ->
             val distance = sensor distanceTo beacon
-            val begin = sensor.x + (distance - abs(row - sensor.y)).unaryMinus()
+            val begin = sensor.x - distance + abs(row - sensor.y)
             val end = sensor.x + distance - abs(row - sensor.y)
             (begin..end).takeUnless { it.isEmpty() }
         }.sortedBy { it.first }
