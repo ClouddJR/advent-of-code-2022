@@ -8,14 +8,14 @@ class Day16(input: List<String>) {
 
     fun solvePart1() = traverse(minutes = 30)
 
-    fun solvePart2() = traverse(minutes = 26, myTurn = true)
+    fun solvePart2() = traverse(minutes = 26, elephantGoesNext = true)
 
     private fun traverse(
         minutes: Int,
         current: Valve = valves.getValue("AA"),
         remaining: Set<Valve> = usefulValves.values.toSet(),
         cache: MutableMap<State, Int> = mutableMapOf(),
-        myTurn: Boolean = false
+        elephantGoesNext: Boolean = false
     ): Int {
         val currentScore = minutes * current.rate
         val currentState = State(current.name, minutes, remaining)
@@ -26,10 +26,10 @@ class Day16(input: List<String>) {
                 .takeIf { it.isNotEmpty() }
                 ?.maxOf { next ->
                     val remainingMinutes = minutes - 1 - distances[current.name]!![next.name]!!
-                    traverse(remainingMinutes, next, remaining - next, cache, myTurn)
+                    traverse(remainingMinutes, next, remaining - next, cache, elephantGoesNext)
                 }
                 ?: 0
-            maxOf(maxCurrent, if (myTurn) traverse(minutes = 26, remaining = remaining) else 0)
+            maxOf(maxCurrent, if (elephantGoesNext) traverse(minutes = 26, remaining = remaining) else 0)
         }
     }
 
