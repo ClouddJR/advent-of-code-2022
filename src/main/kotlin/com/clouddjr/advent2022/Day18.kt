@@ -5,7 +5,7 @@ import com.clouddjr.advent2022.utils.Point3D
 class Day18(input: List<String>) {
     private val points = input.map { it.split(",").map(String::toInt) }.map { (x, y, z) -> Point3D(x, y, z) }.toSet()
 
-    fun solvePart1() = points.sumOf { point -> 6 - point.neighbours().count { it in points } }
+    fun solvePart1() = points.sumOf { point -> point.neighbours().count { it !in points } }
 
     fun solvePart2(): Int {
         val xBounds = points.minOf { it.x } - 1..points.maxOf { it.x } + 1
